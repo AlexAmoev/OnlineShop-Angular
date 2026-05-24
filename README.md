@@ -1,59 +1,105 @@
-# Test
+# Laptop Shop — Angular Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.6.
+A fully functional e-commerce frontend for a laptop store, built with Angular.  
+Browse products, filter by brand/category/price, manage your cart, and authenticate via a live API.
 
-## Development server
+## 🚀 Live Demo
 
-To start a local development server, run:
+**[https://it-step-angular-final-project.vercel.app](https://it-step-angular-final-project.vercel.app)**
+
+### Test Account
+
+Register at [everrest.educata.dev](https://everrest.educata.dev) to get a test account for login/cart features.
+
+---
+
+## Tech Stack
+
+- **Angular 17** — Frontend framework
+- **TypeScript** — Language
+- **RxJS / BehaviorSubject** — Reactive state management
+- **Angular Reactive Forms** — Form handling and validation
+- **HTTP Interceptor** — Automatic JWT token injection
+- **Route Guards** — Protected routes for authenticated users
+- **Vercel** — Deployment
+
+---
+
+## Features
+
+- Product listing with pagination
+- Filter by brand, category, price range, rating, and keyword
+- Product detail page
+- User registration and login via JWT
+- Cart — visible only after login, only when items are added
+- Checkout flow
+- Profile page with update and password change
+- Password recovery
+
+---
+
+## Project Structure
+
+```
+src/app/
+├── home/           → Product listing with filters
+├── brands/         → Brand filter component
+├── filter/         → Advanced filter sidebar
+├── cart/           → Shopping cart (auth-protected)
+├── login/          → Login form
+├── sing-up/        → Registration form
+├── profile/        → User profile management
+├── password-rec/   → Password recovery
+├── navbar/         → Navigation with auth state
+├── api.service.ts  → All HTTP calls in one service
+├── auth.interceptor.ts → Auto JWT injection
+└── page-block.guard.ts → Route protection
+```
+
+---
+
+## Key Technical Details
+
+**Auth Interceptor** — automatically attaches JWT token to every authenticated request:
+
+```typescript
+// auth.interceptor.ts
+// Token is read from localStorage and injected into Authorization header
+```
+
+**Reactive State** — cart visibility and auth state managed via BehaviorSubject:
+
+```typescript
+private isCart = new BehaviorSubject<boolean>(false);
+isCart$ = this.isCart.asObservable();
+```
+
+**Dynamic Search** — filters are built into query params only when set:
+
+```typescript
+Object.keys(filter).forEach((key) => {
+  if (filter[key] !== "" && filter[key] !== null) {
+    params[key] = filter[key];
+  }
+});
+```
+
+---
+
+## Local Development
+
+### Prerequisites
+
+- Node.js 18+
+- Angular CLI: `npm install -g @angular/cli`
+
+### Setup
 
 ```bash
+git clone https://github.com/AlexAmoev/OnlineShop-Angular.git
+cd It-Step_Angular_Final_Project
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Open `http://localhost:4200`
